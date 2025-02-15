@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            transform: scale(1.05);
+        }
+        .page {
+            transition: opacity 0.3s ease;
+        }
+        .page.hidden {
+            display: none;
+            opacity: 0;
+        }
+        .page.visible {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-[#FFF1E6]">
+    <div id="root">
+        <!-- React content will be rendered here -->
+    </div>
+
+    <script type="text/babel">
+        function App() {
+            const [activePage, setActivePage] = React.useState('home');
+
+            const pages = {
+                home: 'home',
+                about: 'about',
+                resume: 'resume',
+                certificates: 'certificates',
+                projects: 'projects',
+                contact: 'contact'
+            };
+
+            const navigateTo = (page) => {
+                setActivePage(page);
+            };
+
+            return (
+                <div className="min-h-screen p-4 md:p-8 max-w-6xl mx-auto">
+                    <header className="text-center mb-8">
+                        <h1 className="text-4xl md:text-5xl text-[#8B4513] mb-2">Hey There!</h1>
+                        <h2 className="text-3xl md:text-4xl text-[#8B4513]">I'm Priyamvada Parihar</h2>
+                    </header>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Personal Details Card */}
+                        <div className="bg-[#FFE4D6] rounded-lg p-6 shadow-lg">
+                            <h3 className="text-2xl text-[#8B4513] mb-4">Personal Details</h3>
+                            <div className="space-y-3">
+                                <p className="flex items-center">
+                                    <i className="bi bi-envelope mr-2"></i>
+                                    pariharprivamvada@gmail.com
+                                </p>
+                                <p className="flex items-center">
+                                    <i className="bi bi-phone mr-2"></i>
+                                    +91 9689264431
+                                </p>
+                                <p className="flex items-center">
+                                    <i className="bi bi-geo-alt mr-2"></i>
+                                    Pune, Maharashtra
+                                </p>
+                                <p className="flex items-center">
+                                    <i className="bi bi-calendar mr-2"></i>
+                                    September 26 2001
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Navigation Grid */}
+                        <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {Object.entries(pages).map(([key, value]) => (
+                                key !== 'home' && (
+                                    <button
+                                        key={key}
+                                        onClick={() => navigateTo(value)}
+                                        className={`nav-item bg-[#FFE4D6] rounded-lg p-6 text-center shadow-lg hover:bg-[#FFD6C2] transition-all
+                                            ${activePage === value ? 'ring-2 ring-[#8B4513]' : ''}`}
+                                    >
+                                        <span className="text-xl text-[#8B4513]">{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                                    </button>
+                                )
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Content Pages */}
+                    {Object.values(pages).map((page) => (
+                        <div key={page} className={`page mt-8 ${activePage === page ? 'visible' : 'hidden'}`}>
+                            <div className="bg-[#FFE4D6] rounded-lg p-6 shadow-lg">
+                                <h3 className="text-2xl text-[#8B4513] mb-4">{page.charAt(0).toUpperCase() + page.slice(1)}</h3>
+                                <p className="text-[#8B4513]">Content for {page} page goes here...</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
